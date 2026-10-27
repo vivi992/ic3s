@@ -32,6 +32,10 @@ window.SITE_DATA = {
                 {
                   "name": "Kiểm tra: Quản lý thông tin",
                   "url": "https://tinhoc247.github.io/ic3-spark-lv2/bai-kiem-tra-hoc-sinh-spark-lv2-quan-ly-thong-tin-mvachx9gs8cx.html"
+                },
+                {
+                  "name": "K12 online",
+                  "url": "https://k12online.vn"
                 }
               ]
             },
@@ -45,6 +49,10 @@ window.SITE_DATA = {
                 {
                   "name": "Kiểm tra: Sáng tạo nội dung",
                   "url": "https://tinhoc247.github.io/ic3-spark-lv3/bai-kiem-tra-hoc-sinh-spark-lv3-sang-tao-noi-dung-mvqsda7yzrdu.html"
+                },
+                {
+                  "name": "K12 Online",
+                  "url": "https://k12online.vn"
                 },
                 {
                   "name": "Wayground ôn tập bài 24",
