@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="topbar"><div class="wrap"><span id="siteIcon"></span><span id="siteTitle"></span></div></div>
+<div class="topbar"><div class="wrap"><a href="#/"><span id="siteIcon"></span><span id="siteTitle"></span></a></div></div>
 <main class="wrap" id="app"><div class="empty">Đang tải…</div></main>
 <footer><a href="admin.html">Quản trị</a></footer>
 <script>
@@ -18,11 +18,6 @@ const safeUrl=u=>/^https?:\/\//i.test(u||'')?u:'';
 const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
 let D,cur=0;
 
-function pill(label,url){
-  const u=safeUrl(url);
-  return u?`<a class="pill" href="${esc(u)}" target="_blank" rel="noopener">${esc(label)}</a>`
-          :`<span class="pill off" title="Chưa có link">${esc(label)}</span>`;
-}
 function render(){
   document.getElementById('siteIcon').textContent=D.siteIcon||'';
   document.getElementById('siteTitle').textContent=D.siteTitle||'';
@@ -35,9 +30,9 @@ function render(){
       h+=`<button class="group-btn" id="gbtn">${esc(g.name)}${D.groups.length>1?' ▾':''}</button>
       <div class="group-menu" id="gmenu">${D.groups.map((x,j)=>`<button data-g="${j}" class="${j===cur?'on':''}">${esc(x.name)}</button>`).join('')}</div>`;
     }
-    h+=`</div><div class="levels">`+(p.levels||[]).map(l=>`
+    h+=`</div><div class="levels">`+(p.levels||[]).map((l,li)=>`
       <div class="level ${esc(l.color)}"><div class="ico">${esc(l.icon)}</div><h3>${esc(l.name)}</h3>
-      <div class="pills">${pill('Bài học',l.lessonUrl)}${pill('Ôn tập',l.reviewUrl)}</div></div>`).join('')+`</div></div>`;
+      <div class="pills"><a class="pill" href="#/${cur}/${i}/${li}">Ôn tập</a></div></div>`).join('')+`</div></div>`;
   });
   if(!(g.programs||[]).length&&D.groups.length)h+=`<div class="row-head"><h2></h2><button class="group-btn" id="gbtn">${esc(g.name)} ▾</button><div class="group-menu" id="gmenu">${D.groups.map((x,j)=>`<button data-g="${j}" class="${j===cur?'on':''}">${esc(x.name)}</button>`).join('')}</div></div><div class="empty">Chưa có chương trình nào.</div>`;
   const s=D.support;
@@ -65,10 +60,28 @@ function render(){
     cp.textContent='Đã chép ✓';setTimeout(()=>cp.textContent='Sao chép',1500);
   };
 }
+function renderReview(gi,pi,li){
+  const l=(((D.groups[gi]||{}).programs||[])[pi]||{}).levels?.[li];
+  if(!l){location.hash='#/';return}
+  const items=l.reviews||[];
+  document.getElementById('app').innerHTML=`<a class="back" href="#/">← Quay lại</a>
+  <h1 class="rtitle">${esc(l.reviewTitle||('Ôn tập '+l.name))}</h1>
+  <div class="rgrid">`+(items.length?items.map(r=>{
+    const u=safeUrl(r.url),ic=esc(l.reviewIcon||'📝');
+    return u?`<a class="rcard on" href="${esc(u)}" target="_blank" rel="noopener"><span class="ico">${ic}</span><b>${esc(r.name)}</b></a>`
+            :`<div class="rcard off"><span class="ico">${ic}</span><b>${esc(r.name)}</b><span class="soon">Sắp có</span></div>`;
+  }).join(''):'<div class="empty" style="grid-column:1/-1">Chưa có bài ôn nào.</div>')+`</div>`;
+}
+function route(){
+  const m=location.hash.match(/^#\/(\d+)\/(\d+)\/(\d+)$/);
+  if(m){cur=+m[1];renderReview(+m[1],+m[2],+m[3])}else render();
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',()=>D&&route());
 document.addEventListener('click',()=>document.getElementById('gmenu')?.classList.remove('open'));
 const sc=document.createElement('script');
 sc.src='data.js?v='+Date.now();
-sc.onload=()=>{D=window.SITE_DATA;render()};
+sc.onload=()=>{D=window.SITE_DATA;route()};
 sc.onerror=()=>document.getElementById('app').innerHTML='<div class="empty">Không tải được dữ liệu (data.js).</div>';
 document.body.appendChild(sc);
 </script>

@@ -9,9 +9,117 @@ window.SITE_DATA = {
           "title": "Chương trình IC3 SPARK GS6",
           "icon": "⭐",
           "levels": [
-            { "name": "Level 1", "icon": "🌱", "color": "yellow", "lessonUrl": "", "reviewUrl": "" },
-            { "name": "Level 2", "icon": "🌿", "color": "orange", "lessonUrl": "", "reviewUrl": "" },
-            { "name": "Level 3", "icon": "🌳", "color": "red", "lessonUrl": "", "reviewUrl": "" }
+            {
+              "name": "Level 1",
+              "icon": "🌱",
+              "color": "yellow",
+              "reviewTitle": "Ôn tập SPARK Level 1",
+              "reviewIcon": "📝",
+              "reviews": [
+                {
+                  "name": "Bài ôn 1",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 2",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 3",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 4",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 5",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 6",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 7",
+                  "url": ""
+                }
+              ]
+            },
+            {
+              "name": "Level 2",
+              "icon": "🌿",
+              "color": "orange",
+              "reviewTitle": "Ôn tập SPARK Level 2",
+              "reviewIcon": "📝",
+              "reviews": [
+                {
+                  "name": "Bài ôn 1",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 2",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 3",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 4",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 5",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 6",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 7",
+                  "url": ""
+                }
+              ]
+            },
+            {
+              "name": "Level 3",
+              "icon": "🌳",
+              "color": "red",
+              "reviewTitle": "Ôn tập SPARK Level 3",
+              "reviewIcon": "📝",
+              "reviews": [
+                {
+                  "name": "Bài ôn 1",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 2",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 3",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 4",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 5",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 6",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 7",
+                  "url": ""
+                }
+              ]
+            }
           ]
         }
       ]
