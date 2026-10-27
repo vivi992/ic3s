@@ -23,7 +23,7 @@ window.SITE_DATA = {
               ]
             },
             {
-              "name": "Level 2",
+              "name": "SPARK Level 2",
               "icon": "🌿",
               "color": "teal",
               "reviewTitle": "SPARK Level 2",
