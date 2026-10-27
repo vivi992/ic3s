@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Trang chủ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="topbar"><div class="wrap"><span id="siteIcon"></span><span id="siteTitle"></span></div></div>
+<main class="wrap" id="app"><div class="empty">Đang tải…</div></main>
+<footer><a href="admin.html">Quản trị</a></footer>
+<script>
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const safeUrl=u=>/^https?:\/\//i.test(u||'')?u:'';
+const md=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>');
+let D,cur=0;
+
+function pill(label,url){
+  const u=safeUrl(url);
+  return u?`<a class="pill" href="${esc(u)}" target="_blank" rel="noopener">${esc(label)}</a>`
+          :`<span class="pill off" title="Chưa có link">${esc(label)}</span>`;
+}
+function render(){
+  document.getElementById('siteIcon').textContent=D.siteIcon||'';
+  document.getElementById('siteTitle').textContent=D.siteTitle||'';
+  document.title=D.siteTitle||'Trang chủ';
+  const g=D.groups[cur]||{programs:[]};
+  let h='';
+  (g.programs||[]).forEach((p,i)=>{
+    h+=`<div class="prog"><div class="row-head"><h2><span>${esc(p.icon)}</span>${esc(p.title)}</h2>`;
+    if(i===0&&D.groups.length>0){
+      h+=`<button class="group-btn" id="gbtn">${esc(g.name)}${D.groups.length>1?' ▾':''}</button>
+      <div class="group-menu" id="gmenu">${D.groups.map((x,j)=>`<button data-g="${j}" class="${j===cur?'on':''}">${esc(x.name)}</button>`).join('')}</div>`;
+    }
+    h+=`</div><div class="levels">`+(p.levels||[]).map(l=>`
+      <div class="level ${esc(l.color)}"><div class="ico">${esc(l.icon)}</div><h3>${esc(l.name)}</h3>
+      <div class="pills">${pill('Bài học',l.lessonUrl)}${pill('Ôn tập',l.reviewUrl)}</div></div>`).join('')+`</div></div>`;
+  });
+  if(!(g.programs||[]).length&&D.groups.length)h+=`<div class="row-head"><h2></h2><button class="group-btn" id="gbtn">${esc(g.name)} ▾</button><div class="group-menu" id="gmenu">${D.groups.map((x,j)=>`<button data-g="${j}" class="${j===cur?'on':''}">${esc(x.name)}</button>`).join('')}</div></div><div class="empty">Chưa có chương trình nào.</div>`;
+  const s=D.support;
+  if(s){
+    const vu=safeUrl(s.videoUrl),cu=safeUrl(s.cardUrl);
+    h+=`<div class="row-head"><h2><span>${esc(s.icon)}</span>${esc(s.title)}</h2></div>
+    <div class="support">
+      <a class="k12" ${cu?`href="${esc(cu)}" target="_blank" rel="noopener"`:''}><span class="ico">${esc(s.cardIcon)}</span><b>${esc(s.cardName)}</b></a>
+      <div class="guide"><h3>📝 ${esc(s.guideTitle)}</h3>
+        <ol>${(s.steps||[]).map(x=>`<li>${md(x)}</li>`).join('')}</ol>
+        ${s.password?`<div class="pw">🔑 ${esc(s.passwordLabel)} <code id="pw">${esc(s.password)}</code><button class="copy" id="cp">Sao chép</button></div>`:''}
+        ${vu?`<div class="vid">🎬 <a href="${esc(vu)}" target="_blank" rel="noopener">${esc(s.videoText)}</a></div>`:''}
+      </div></div>`;
+  }
+  document.getElementById('app').innerHTML=h;
+  const gb=document.getElementById('gbtn'),gm=document.getElementById('gmenu');
+  if(gb&&D.groups.length>1){
+    gb.onclick=e=>{e.stopPropagation();gm.classList.toggle('open')};
+    gm.onclick=e=>{const b=e.target.closest('[data-g]');if(b){cur=+b.dataset.g;render()}};
+  }
+  const cp=document.getElementById('cp');
+  if(cp)cp.onclick=async()=>{
+    const t=D.support.password;
+    try{await navigator.clipboard.writeText(t)}catch{const r=document.createRange();r.selectNode(document.getElementById('pw'));getSelection().removeAllRanges();getSelection().addRange(r);document.execCommand('copy')}
+    cp.textContent='Đã chép ✓';setTimeout(()=>cp.textContent='Sao chép',1500);
+  };
+}
+document.addEventListener('click',()=>document.getElementById('gmenu')?.classList.remove('open'));
+const sc=document.createElement('script');
+sc.src='data.js?v='+Date.now();
+sc.onload=()=>{D=window.SITE_DATA;render()};
+sc.onerror=()=>document.getElementById('app').innerHTML='<div class="empty">Không tải được dữ liệu (data.js).</div>';
+document.body.appendChild(sc);
+</script>
+</body>
+</html>
