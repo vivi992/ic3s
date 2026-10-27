@@ -130,7 +130,7 @@ window.SITE_DATA = {
     "icon": "🌐",
     "cardName": "K12 Online",
     "cardIcon": "📚",
-    "cardUrl": "https://example.com",
+    "cardUrl": "https://k12online.vn",
     "guideTitle": "Hướng dẫn",
     "steps": [
       "Bấm vào **K12 Online** để mở trang Web.",
