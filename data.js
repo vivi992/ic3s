@@ -10,14 +10,14 @@ window.SITE_DATA = {
           "icon": "⭐",
           "levels": [
             {
-              "name": "Level 1",
+              "name": "SPARK Level 1",
               "icon": "🌱",
               "color": "green",
-              "reviewTitle": "Ôn tập SPARK Level 1",
+              "reviewTitle": "SPARK Level 1",
               "reviewIcon": "📝",
               "reviews": [
                 {
-                  "name": "Bài ôn 1",
+                  "name": "SPARK Level 1",
                   "url": ""
                 }
               ]
@@ -26,7 +26,7 @@ window.SITE_DATA = {
               "name": "Level 2",
               "icon": "🌿",
               "color": "teal",
-              "reviewTitle": "Ôn tập SPARK Level 2",
+              "reviewTitle": "SPARK Level 2",
               "reviewIcon": "📝",
               "reviews": [
                 {
@@ -36,10 +36,10 @@ window.SITE_DATA = {
               ]
             },
             {
-              "name": "Level 3",
+              "name": "Spark Level 3",
               "icon": "🌳",
               "color": "blue",
-              "reviewTitle": "Ôn tập SPARK Level 3",
+              "reviewTitle": "SPARK Level 3",
               "reviewIcon": "📝",
               "reviews": [
                 {
