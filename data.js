@@ -54,8 +54,32 @@ window.SITE_DATA = {
               "reviewIcon": "📝",
               "reviews": [
                 {
-                  "name": "Kiểm tra - Quản lý thông tin",
-                  "url": "https://tinhoc247.github.io/ic3-spark-lv2/bai-kiem-tra-hoc-sinh-spark-lv2-quan-ly-thong-tin-mvachx9gs8cx.html"
+                  "name": "Bài ôn 1",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 2",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 3",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 4",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 5",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 6",
+                  "url": ""
+                },
+                {
+                  "name": "Bài ôn 7",
+                  "url": ""
                 }
               ]
             },

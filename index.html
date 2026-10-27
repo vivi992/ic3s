@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trang chủ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="student.css">
 </head>
 <body>
 <div class="topbar"><div class="wrap"><a href="#/"><span id="siteIcon"></span><span id="siteTitle"></span></a></div></div>
 <main class="wrap" id="app"><div class="empty">Đang tải…</div></main>
-<footer><a href="admin.html">Quản trị</a></footer>
 <script>
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=u=>/^https?:\/\//i.test(u||'')?u:'';
@@ -22,37 +22,39 @@ function render(){
   document.getElementById('siteIcon').textContent=D.siteIcon||'';
   document.getElementById('siteTitle').textContent=D.siteTitle||'';
   document.title=D.siteTitle||'Trang chủ';
-  const g=D.groups[cur]||{programs:[]};
-  let h='';
-  (g.programs||[]).forEach((p,i)=>{
-    h+=`<div class="prog"><div class="row-head"><h2><span>${esc(p.icon)}</span>${esc(p.title)}</h2>`;
-    if(i===0&&D.groups.length>0){
-      h+=`<button class="group-btn" id="gbtn">${esc(g.name)}${D.groups.length>1?' ▾':''}</button>
-      <div class="group-menu" id="gmenu">${D.groups.map((x,j)=>`<button data-g="${j}" class="${j===cur?'on':''}">${esc(x.name)}</button>`).join('')}</div>`;
-    }
-    h+=`</div><div class="levels">`+(p.levels||[]).map((l,li)=>`
-      <div class="level ${esc(l.color)}"><div class="ico">${esc(l.icon)}</div><h3>${esc(l.name)}</h3>
-      <div class="pills"><a class="pill" href="#/${cur}/${i}/${li}">Ôn tập</a></div></div>`).join('')+`</div></div>`;
+  const groups=D.groups||[], g=groups[cur]||{programs:[]};
+
+  let h=`<section class="hero"><div><h1>Chào bạn! Cùng <mark>ôn bài</mark> nào 👋</h1><p>Chọn level của bạn để bắt đầu nhé.</p></div>`;
+  if(groups.length>1) h+=`<div class="tabs" role="group" aria-label="Chọn cấp học">${groups.map((x,j)=>`<button class="tab" data-g="${j}" aria-pressed="${j===cur}">${esc(x.name)}</button>`).join('')}</div>`;
+  else if(groups.length===1) h+=`<span class="badge-group">${esc(g.name)}</span>`;
+  h+=`</section>`;
+
+  const progs=g.programs||[];
+  progs.forEach((p,i)=>{
+    h+=`<section class="prog"><div class="sec-head"><h2><span class="sico">${esc(p.icon)}</span>${esc(p.title)}</h2></div><div class="levels">`;
+    h+=(p.levels||[]).map((l,li)=>{
+      return `<a class="level ${esc(l.color)}" href="#/${cur}/${i}/${li}">
+        <div class="top"><div class="ico">${esc(l.icon)}</div></div>
+        <div class="body"><h3>${esc(l.name)}</h3><span class="go">Bấm để mở <i>→</i></span></div></a>`;
+    }).join('')+`</div></section>`;
   });
-  if(!(g.programs||[]).length&&D.groups.length)h+=`<div class="row-head"><h2></h2><button class="group-btn" id="gbtn">${esc(g.name)} ▾</button><div class="group-menu" id="gmenu">${D.groups.map((x,j)=>`<button data-g="${j}" class="${j===cur?'on':''}">${esc(x.name)}</button>`).join('')}</div></div><div class="empty">Chưa có chương trình nào.</div>`;
+  if(!progs.length&&groups.length) h+=`<div class="empty">Chưa có chương trình nào.</div>`;
+
   const s=D.support;
   if(s){
-    const vu=safeUrl(s.videoUrl),cu=safeUrl(s.cardUrl);
-    h+=`<div class="row-head"><h2><span>${esc(s.icon)}</span>${esc(s.title)}</h2></div>
+    const vu=safeUrl(s.videoUrl), cu=safeUrl(s.cardUrl);
+    h+=`<section class="prog"><div class="sec-head"><h2><span class="sico">${esc(s.icon)}</span>${esc(s.title)}</h2></div>
     <div class="support">
-      <a class="k12" ${cu?`href="${esc(cu)}" target="_blank" rel="noopener"`:''}><span class="ico">${esc(s.cardIcon)}</span><b>${esc(s.cardName)}</b></a>
+      <a class="k12" ${cu?`href="${esc(cu)}" target="_blank" rel="noopener"`:''}><span class="ico">${esc(s.cardIcon)}</span><b>${esc(s.cardName)}</b>${cu?'<span class="go">Bấm để mở <i>→</i></span>':''}</a>
       <div class="guide"><h3>📝 ${esc(s.guideTitle)}</h3>
-        <ol>${(s.steps||[]).map(x=>`<li>${md(x)}</li>`).join('')}</ol>
+        <ol>${(s.steps||[]).map(x=>`<li><span>${md(x)}</span></li>`).join('')}</ol>
         ${s.password?`<div class="pw">🔑 ${esc(s.passwordLabel)} <code id="pw">${esc(s.password)}</code><button class="copy" id="cp">Sao chép</button></div>`:''}
         ${vu?`<div class="vid">🎬 <a href="${esc(vu)}" target="_blank" rel="noopener">${esc(s.videoText)}</a></div>`:''}
-      </div></div>`;
+      </div></div></section>`;
   }
   document.getElementById('app').innerHTML=h;
-  const gb=document.getElementById('gbtn'),gm=document.getElementById('gmenu');
-  if(gb&&D.groups.length>1){
-    gb.onclick=e=>{e.stopPropagation();gm.classList.toggle('open')};
-    gm.onclick=e=>{const b=e.target.closest('[data-g]');if(b){cur=+b.dataset.g;render()}};
-  }
+
+  document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{cur=+b.dataset.g;render()});
   const cp=document.getElementById('cp');
   if(cp)cp.onclick=async()=>{
     const t=D.support.password;
@@ -60,25 +62,33 @@ function render(){
     cp.textContent='Đã chép ✓';setTimeout(()=>cp.textContent='Sao chép',1500);
   };
 }
+
 function renderReview(gi,pi,li){
   const l=(((D.groups[gi]||{}).programs||[])[pi]||{}).levels?.[li];
   if(!l){location.hash='#/';return}
   const items=l.reviews||[];
   document.getElementById('app').innerHTML=`<a class="back" href="#/">← Quay lại</a>
-  <h1 class="rtitle">${esc(l.reviewTitle||('Ôn tập '+l.name))}</h1>
-  <div class="rgrid">`+(items.length?items.map(r=>{
-    const u=safeUrl(r.url),ic=esc(l.reviewIcon||'📝');
-    return u?`<a class="rcard on" href="${esc(u)}" target="_blank" rel="noopener"><span class="ico">${ic}</span><b>${esc(r.name)}</b></a>`
-            :`<div class="rcard off"><span class="ico">${ic}</span><b>${esc(r.name)}</b><span class="soon">Sắp có</span></div>`;
+  <div class="banner ${esc(l.color)}"><div class="ico">${esc(l.icon||'📝')}</div>
+    <div class="info"><h1>${esc(l.name)}</h1></div></div>
+  <div class="rgrid">`+(items.length?items.map((r,n)=>{
+    const u=safeUrl(r.url);
+    return u?`<a class="rcard on ${esc(l.color)}" href="${esc(u)}" target="_blank" rel="noopener"><span class="num">${n+1}</span><b>${esc(r.name)}</b><span class="tag">Bắt đầu</span></a>`
+            :`<div class="rcard off ${esc(l.color)}"><span class="num">${n+1}</span><b>${esc(r.name)}</b><span class="tag">Sắp có</span></div>`;
   }).join(''):'<div class="empty" style="grid-column:1/-1">Chưa có bài ôn nào.</div>')+`</div>`;
 }
+
+function setBrand(){
+  document.getElementById('siteIcon').textContent=D.siteIcon||'';
+  document.getElementById('siteTitle').textContent=D.siteTitle||'';
+  document.title=D.siteTitle||'Trang chủ';
+}
 function route(){
+  setBrand();
   const m=location.hash.match(/^#\/(\d+)\/(\d+)\/(\d+)$/);
   if(m){cur=+m[1];renderReview(+m[1],+m[2],+m[3])}else render();
   window.scrollTo(0,0);
 }
 window.addEventListener('hashchange',()=>D&&route());
-document.addEventListener('click',()=>document.getElementById('gmenu')?.classList.remove('open'));
 const sc=document.createElement('script');
 sc.src='data.js?v='+Date.now();
 sc.onload=()=>{D=window.SITE_DATA;route()};
