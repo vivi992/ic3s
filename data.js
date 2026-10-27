@@ -12,36 +12,12 @@ window.SITE_DATA = {
             {
               "name": "Level 1",
               "icon": "🌱",
-              "color": "yellow",
+              "color": "green",
               "reviewTitle": "Ôn tập SPARK Level 1",
               "reviewIcon": "📝",
               "reviews": [
                 {
                   "name": "Bài ôn 1",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 2",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 3",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 4",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 5",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 6",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 7",
                   "url": ""
                 }
               ]
@@ -49,44 +25,20 @@ window.SITE_DATA = {
             {
               "name": "Level 2",
               "icon": "🌿",
-              "color": "orange",
+              "color": "teal",
               "reviewTitle": "Ôn tập SPARK Level 2",
               "reviewIcon": "📝",
               "reviews": [
                 {
-                  "name": "Bài ôn 1",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 2",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 3",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 4",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 5",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 6",
-                  "url": ""
-                },
-                {
-                  "name": "Bài ôn 7",
-                  "url": ""
+                  "name": "Kiểm tra: Quản lý thông tin",
+                  "url": "https://tinhoc247.github.io/ic3-spark-lv2/bai-kiem-tra-hoc-sinh-spark-lv2-quan-ly-thong-tin-mvachx9gs8cx.html"
                 }
               ]
             },
             {
               "name": "Level 3",
               "icon": "🌳",
-              "color": "red",
+              "color": "blue",
               "reviewTitle": "Ôn tập SPARK Level 3",
               "reviewIcon": "📝",
               "reviews": [
